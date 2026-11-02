@@ -10,10 +10,20 @@ df = pd.read_csv("bicycle_data.csv")
 # a datetime format), while the count columns should be floats.
 
 # Converting Date to datetime format
-df["Date"] = pd.to_datetime(df["Date"], format = "%m/%d/%Y %H:%M:%S %p")
+df["Date"] = pd.to_datetime(df["Date"], format = "%m/%d/%Y %I:%M:%S %p")
+
+# Renaming count columns
+df.columns = ["Date", "Total", "West", "East"]
 
 
 # Adding columns to dataframe containing
 # 1.) Total (East+West) bicycle count
+## print(df["Total"].equals(df["West"] + df["East"]))
+## Total column is already included with original data
 # 2.) Hour of the day
 # 3.) Year 
+df["Hour"] = df["Date"].dt.hour
+df["Year"] = df["Date"].dt.year
+
+print(df)
+
