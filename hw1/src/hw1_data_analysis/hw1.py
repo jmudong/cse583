@@ -25,5 +25,14 @@ df.columns = ["Date", "Total", "West", "East"]
 df["Hour"] = df["Date"].dt.hour
 df["Year"] = df["Date"].dt.year
 
-print(df)
+# 2016 subset of original df
+df_2016 = df[df["Year"] == 2016]
+
+# Check for missing data
+## print(df_2016.isna().any(axis=1).sum())
+## 1 row with missing values
+# Filter out missing data
+df_2016 = df_2016.dropna()    
+
+
 
