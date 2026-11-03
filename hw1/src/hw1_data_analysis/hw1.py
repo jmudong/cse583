@@ -1,4 +1,4 @@
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import numpy as np 
 import pandas as pd 
 
@@ -32,7 +32,17 @@ df_2016 = df[df["Year"] == 2016]
 ## print(df_2016.isna().any(axis=1).sum())
 ## 1 row with missing values
 # Filter out missing data
-df_2016 = df_2016.dropna()    
+df_2016 = df_2016.dropna()   
 
+# Create plot of hour vs. total count
+ax = df_2016.plot(x = "Hour", y = "Total", title = "Plot of Bicycle Counts per Hour")
+ax.set_xlabel("Hour of the Day")
+ax.set_ylabel("Total Bicycle Count")
+plt.savefig("counts_by_hour.png")
+
+# Calculate average busiest hour of the day
+hourly_total_avg = df_2016.groupby("Hour")["Total"].mean()
+## print((hourly_total_avg.max(), hourly_total_avg.idxmax()))
+## Busiest hour is 5pm with ~400 bicycles
 
 
