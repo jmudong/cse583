@@ -7,7 +7,7 @@ df = pd.read_csv("bicycle_data.csv")
 
 # The dataframe should contain 4 columns, which includes a Date column and a 3 separate columns describing the count
 # of bicycles crossing the Fremont Bridge. The Date column should be read as a string (which we can convert into
-# a datetime format), while the count columns should be floats.
+# a datetime format), while the count columns should be read as an int. 
 
 # Converting Date to datetime format
 df["Date"] = pd.to_datetime(df["Date"], format = "%m/%d/%Y %I:%M:%S %p")
