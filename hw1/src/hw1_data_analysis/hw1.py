@@ -34,13 +34,19 @@ df_2016 = df[df["Year"] == 2016]
 # Filter out missing data
 df_2016 = df_2016.dropna()   
 
-# Create plot of hour vs. total count
+# Aggregate total counts by hour
+hourly_total = df.groupby("Hour")["Total (Hour)"].sum()
+# Plot of aggregate total count for each hour
+plt.plot(hourly_total.index, hourly_total.values)
+plt.xlabel("Hour of the Day")
+plt.ylabel("Total Bicycle Count")
+plt.title("Total Bicycle Count vs. Hour")
+plt.savefig("counts_by_hour.png")
+
 
 # Calculate average busiest hour of the day
 hourly_total_avg = df_2016.groupby("Hour")["Total (Hour)"].mean()
 ## print((hourly_total_avg.max(), hourly_total_avg.idxmax()))
 ## Busiest hour is 5pm with ~400 bicycles
-
-print(df.head())
 
 
