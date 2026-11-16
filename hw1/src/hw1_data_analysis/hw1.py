@@ -13,17 +13,17 @@ df = pd.read_csv("bicycle_data.csv")
 df["Date"] = pd.to_datetime(df["Date"], format = "%m/%d/%Y %I:%M:%S %p")
 
 # Renaming count columns
-df.columns = ["Date", "Total", "West", "East"]
+df.columns = ["Date", "Total (Hour)", "West", "East"]
 
 
 # Adding columns to dataframe containing
 # 1.) Total (East+West) bicycle count
-## print(df["Total"].equals(df["West"] + df["East"]))
-## Total column is already included with original data
 # 2.) Hour of the day
 # 3.) Year 
 df["Hour"] = df["Date"].dt.hour
 df["Year"] = df["Date"].dt.year
+df["Date"] = df["Date"].dt.date
+df["Total (Daily)"] = df.groupby("Date")["Total (Hour)"].transform("sum")
 
 # 2016 subset of original df
 df_2016 = df[df["Year"] == 2016]
@@ -35,14 +35,12 @@ df_2016 = df[df["Year"] == 2016]
 df_2016 = df_2016.dropna()   
 
 # Create plot of hour vs. total count
-ax = df_2016.plot(x = "Hour", y = "Total", title = "Plot of Bicycle Counts per Hour")
-ax.set_xlabel("Hour of the Day")
-ax.set_ylabel("Total Bicycle Count")
-plt.savefig("counts_by_hour.png")
 
 # Calculate average busiest hour of the day
-hourly_total_avg = df_2016.groupby("Hour")["Total"].mean()
+hourly_total_avg = df_2016.groupby("Hour")["Total (Hour)"].mean()
 ## print((hourly_total_avg.max(), hourly_total_avg.idxmax()))
 ## Busiest hour is 5pm with ~400 bicycles
+
+print(df.head())
 
 
